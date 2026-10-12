@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/*
+ * Palet tridatu yang nyaman di mata.
+ *
+ *   Putih → kertas hangat, bukan #fff: silau berkurang untuk layar seharian.
+ *   Hitam → arang hangat, bukan #000: kontras 15:1 tetap tinggi tanpa terlalu keras.
+ *   Merah → merah bata yang diredam: dipakai hemat, untuk hal yang butuh perhatian.
+ *
+ * Semua pasangan teks/latar lolos WCAG AA (dicek di scripts/kontras.mjs).
+ * Palet bawaan Tailwind dimatikan supaya tidak ada warna liar di luar token ini.
+ */
+@theme {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: #ffffff;
+
+  /* Putih */
+  --color-paper: #f4f1eb;
+  --color-surface: #fcfbf8;
+  --color-sunken: #ece8e0;
+  --color-line: #e0dad0;
+  --color-line-strong: #c4bbad;
+  /* Batas isian ≥ 3:1 terhadap permukaan (WCAG 1.4.11) */
+  --color-line-input: #9a9083;
+
+  /* Hitam */
+  --color-ink: #1f1b17;
+  --color-ink-2: #4a443e;
+  --color-ink-3: #6e665e;
+  --color-ink-hover: #3a342f;
+
+  /* Merah */
+  --color-merah: #a3302a;
+  --color-merah-strong: #8c2721;
+  --color-merah-soft: #f6e5e1;
+
+  /* Nada status, diredam agar serasi dengan tridatu */
+  --color-tunggu: #6e4b0d;
+  --color-tunggu-dot: #b07d1e;
+  --color-tunggu-soft: #f4ead3;
+  --color-revisi: #304b66;
+  --color-revisi-dot: #4d6f91;
+  --color-revisi-soft: #e3eaf1;
+  --color-jalan: #2a5840;
+  --color-jalan-dot: #3d7a57;
+  --color-jalan-soft: #e3ede5;
+
+  /* Meter anggaran: satu rona, gelap = sudah final (lolos validator ordinal) */
+  --color-meter-1: #3f3a35;
+  --color-meter-2: #9a9083;
+
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5rem;
+  --text-md: 1rem;
+  --text-md--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.625rem;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.875rem;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 2.25rem;
+  --text-3xl: 2.25rem;
+  --text-3xl--line-height: 2.75rem;
+
+  --shadow-*: initial;
+  --shadow-overlay: 0 1px 2px rgb(31 27 23 / 0.06), 0 12px 32px -8px rgb(31 27 23 / 0.18);
+  --shadow-bar: 0 -1px 0 var(--color-line), 0 -8px 24px -12px rgb(31 27 23 / 0.12);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    font-feature-settings: "ss01" 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-merah-soft);
+    color: var(--color-merah-strong);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-merah);
+    outline-offset: 2px;
+  }
+
+  /* Isian ≥ 16px supaya Safari di HP tidak memperbesar halaman saat diketuk. */
+  input,
+  select,
+  textarea {
+    font-size: var(--text-md);
+  }
+
+  [type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 14mm;
+}
